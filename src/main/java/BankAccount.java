@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Class implementing a bank account.
  * <p>
@@ -9,30 +7,118 @@ import java.util.Random;
  */
 public class BankAccount {
 
-    /*
-     * You may want to use this to distinguish between different kinds of accounts.
+    /**
+     * Types of bank accounts.
      */
     public enum BankAccountType {
+        /**
+         * Checkings account.
+         */
         CHECKINGS,
+        /**
+         * Savings account.
+         */
         SAVINGS,
+        /**
+         * Student account.
+         */
         STUDENT,
+        /**
+         * Workplace account.
+         */
         WORKPLACE
     }
 
+    /**
+     * Number of account.
+     */
     private int accountNumber;
-    public BankAccountType accountType;
-    private double accountBalance;
-    private String ownerName;
-    public double interestRate;
-    private double interestEarned;
 
-    public BankAccount(final String name, final BankAccountType accountCategory) {
-        /*
-         * Implement this function
-         */
+    /**
+     * Type of account.
+     */
+    private BankAccountType type;
+
+    /**
+     * Balance of account.
+     */
+    private double balance;
+
+    /**
+     * Name of owner.
+     */
+    private String name;
+
+    /**
+     * Creates new Bank Account.
+     *
+     * @param accountHolder Owner name
+     * @param accountCategory Type of account
+     */
+    public BankAccount(final String accountHolder, final BankAccountType accountCategory) {
+        this.name = accountHolder;
+        this.type = accountCategory;
+        this.balance = 0;
+
+        Bank.addAccount();
+        this.accountNumber = Bank.getNumberOfAccounts();
     }
 
-    /*
-     * Implement getters and setters as appropriate for private variables.
+    /**
+     * @return Balance of account
      */
+    public double getBalance() {
+        return balance;
+    }
+
+    /**
+     * @param amount Amount to deposit
+     * @return True / False if the deposit was successful
+     */
+    public boolean deposit(final double amount) {
+        balance += amount;
+        return true;
+    }
+
+    /**
+     * @param amount Amount to withdraw
+     * @return True / False aif the deposit was successful
+     */
+    public boolean withdraw(final double amount) {
+        double newBal = balance - amount;
+        if (newBal < 0) {
+            return false;
+        }
+        balance = newBal;
+        return true;
+    }
+
+    /**
+     * @return Name of owner
+     */
+    public String getAccountOwner() {
+        return name;
+    }
+
+    /**
+     * @return Type of account
+     */
+    public BankAccountType getAccountType() {
+        return type;
+    }
+
+    /**
+     * @return Number of account
+     */
+    public int getAccountNumber() {
+        return accountNumber;
+    }
+
+    /**
+     * Sets name of account holder.
+     * @param accountHolder Name of new owner
+     */
+    public void setOwnerName(final String accountHolder) {
+        this.name = accountHolder;
+    }
 }
